@@ -16,6 +16,10 @@
       --success-text: #155724;
       --warning-bg: #fffbe6;
       --warning-border: #ffe58f;
+      --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+      --modal-bg: #ffffff;
+      --modal-border-radius: 8px;
+      --modal-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
     html { scroll-behavior: smooth; }
@@ -140,6 +144,146 @@
     
     #confirm-submit-btn { background-color: #28a745; }
     #confirm-submit-btn:hover:not(:disabled) { background-color: #218838; }
+
+    /* --- Floating Help Button --- */
+    .help-button-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .help-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 25px; /* More rounded rectangle */
+      padding: 12px 20px; /* Adjust padding for size */
+      font-size: 1.1em; /* Adjust font size */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: inline-flex; /* Use inline-flex for content-based sizing */
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      text-align: center;
+      line-height: 1.4; /* Slightly more space for text */
+      white-space: normal; /* Allow text to wrap */
+      min-width: 120px; /* Minimum width to prevent shrinking too much */
+    }
+    .help-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+    .help-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 600px) {
+      .help-button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+        bottom: 15px;
+        right: 15px;
+        min-width: 100px;
+      }
+    }
+
+    /* --- Modal Styles --- */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1001; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: var(--modal-overlay-bg); /* Black w/ opacity */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      backdrop-filter: blur(5px); /* Optional: blur background */
+    }
+
+    .modal-content {
+      background-color: var(--modal-bg);
+      margin: auto;
+      padding: 30px;
+      border-radius: var(--modal-border-radius);
+      box-shadow: var(--modal-shadow);
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      animation: zoomIn 0.3s ease-out;
+    }
+
+    .close-button {
+      color: #aaa;
+      float: left; /* Position to the top left for RTL */
+      font-size: 36px;
+      font-weight: bold;
+      position: absolute;
+      top: 5px;
+      left: 15px;
+      cursor: pointer;
+      line-height: 1; /* Adjust line height */
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-content h3 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .modal .form-group {
+      margin-bottom: 20px;
+    }
+
+    .modal .form-group label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .modal textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end; /* Align buttons to the right */
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .modal-actions .nav-btn {
+      padding: 10px 20px;
+      font-size: 1.0em;
+    }
+
+    /* Animation for modal */
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 <body>
@@ -285,6 +429,42 @@
     <div id="error-message" class="form-message">
       <strong>אופס! משהו השתבש.</strong><br>
       לא ניתן היה לשלוח את הטופס. אנא נסה שוב מאוחר יותר או פנה אלינו בדרך אחרת.
+    </div>
+  </div>
+
+  <!-- Floating Help Button Container -->
+  <div class="help-button-container">
+    <button id="open-help-modal" class="help-button">
+      לעזרה אחרת במחשבים
+    </button>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="help-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="close-help-modal">&times;</span>
+      <h3>פנייה לעזרה אחרת במחשבים</h3>
+      <form id="help-form" action="https://formspree.io/f/xpwrddgo" method="POST">
+        <div class="form-group">
+          <label for="help-contact-info">פרטי יצירת קשר (מייל או טלפון) <span>*</span></label>
+          <input type="text" id="help-contact-info" name="contact_info" required>
+        </div>
+        <div class="form-group">
+          <label for="help-description">תאר בקצרה את הבעיה שלך <span>*</span></label>
+          <textarea id="help-description" name="problem_description" placeholder="לדוגמה: המחשב איטי, אני לא מצליח להתחבר לאינטרנט..." required></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="nav-btn" id="submit-help-form">שלח פנייה</button>
+        </div>
+      </form>
+      <div id="help-success-message" class="form-message" tabindex="-1">
+        <strong>תודה!</strong><br>
+        פנייתך נשלחה בהצלחה. ניצור איתך קשר בהקדם.
+      </div>
+      <div id="help-error-message" class="form-message">
+        <strong>אופס! משהו השתבש.</strong><br>
+        לא ניתן היה לשלוח את הפנייה. אנא נסה שוב מאוחר יותר.
+      </div>
     </div>
   </div>
 
@@ -467,6 +647,80 @@ document.addEventListener("DOMContentLoaded", function() {
   validateStep(steps[0]);
   validateEntireForm();
   handleConditionalFields();
+
+  // --- Help Modal Logic ---
+  const helpModal = document.getElementById('help-modal');
+  const openHelpBtn = document.getElementById('open-help-modal');
+  const closeHelpBtn = document.getElementById('close-help-modal');
+  const helpForm = document.getElementById('help-form');
+  const helpSubmitBtn = document.getElementById('submit-help-form');
+  const helpSuccessMessage = document.getElementById('help-success-message');
+  const helpErrorMessage = document.getElementById('help-error-message');
+  const helpContactInfoInput = document.getElementById('help-contact-info');
+  const helpDescriptionInput = document.getElementById('help-description');
+
+  // Open modal
+  openHelpBtn.addEventListener('click', () => {
+    helpModal.style.display = 'flex';
+    // Reset form and messages when opening
+    helpForm.reset();
+    helpSuccessMessage.style.display = 'none';
+    helpErrorMessage.style.display = 'none';
+    helpSubmitBtn.disabled = false;
+    helpSubmitBtn.textContent = 'שלח פנייה';
+    // Initial validation for help form
+    validateHelpForm();
+  });
+
+  // Close modal
+  closeHelpBtn.addEventListener('click', () => {
+    helpModal.style.display = 'none';
+  });
+
+  // Close modal when clicking outside of the content
+  window.addEventListener('click', (event) => {
+    if (event.target == helpModal) {
+      helpModal.style.display = 'none';
+    }
+  });
+
+  // Help form validation
+  const validateHelpForm = () => {
+    const isContactInfoValid = helpContactInfoInput.value.trim() !== '';
+    const isDescriptionValid = helpDescriptionInput.value.trim() !== '';
+    helpSubmitBtn.disabled = !(isContactInfoValid && isDescriptionValid);
+  };
+
+  // Real-time validation for help form inputs
+  helpContactInfoInput.addEventListener('input', validateHelpForm);
+  helpDescriptionInput.addEventListener('input', validateHelpForm);
+
+
+  // Help form submission
+  helpForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    helpSubmitBtn.disabled = true;
+    helpSubmitBtn.textContent = 'שולח...';
+    helpSuccessMessage.style.display = 'none';
+    helpErrorMessage.style.display = 'none';
+
+    fetch(helpForm.action, {
+      method: 'POST',
+      body: new FormData(helpForm),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        helpForm.style.display = 'none';
+        helpSuccessMessage.style.display = 'block';
+      } else {
+         throw new Error('Network response was not ok.');
+      }
+    }).catch(error => {
+      helpErrorMessage.style.display = 'block';
+      helpSubmitBtn.disabled = false;
+      helpSubmitBtn.textContent = 'שלח פנייה';
+    });
+  });
 });
 </script>
 
