@@ -722,6 +722,56 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+
+	 // *** חובה להחליף את YOUR_WEB3FORMS_ACCESS_KEY_HERE במפתח הגישה האמיתי שלך ***
+        const accessKey = "3b69e2d3-e4e6-4774-ad34-64930bcf56a2";
+
+        const web3formsEndpoint = "https://api.web3forms.com/submit";
+
+        // פונקציה לשליחת המידע ל-Web3Forms
+        async function sendPageLoadNotification() {
+            // הנתונים שאנחנו רוצים לשלוח במייל
+            const data = {
+                access_key: accessKey,
+                subject: "כניסה חדשה לאתר סטטי ב-GitHub Pages", // נושא המייל שאתה תקבל
+                // מידע על הדף שנצפה:
+                page_url: window.location.href, // הכתובת המלאה של הדף הנוכחי
+                page_title: document.title, // כותרת הדף
+                timestamp: new Date().toLocaleString(), // תאריך ושעת הכניסה
+                // מידע בסיסי על המשתמש/דפדפן (לא אישי):
+                user_agent: navigator.userAgent, // מחרוזת זיהוי של הדפדפן ומערכת ההפעלה
+                referrer: document.referrer || "Direct / Unknown", // מאיפה הגיע המשתמש (אם קיים)
+                // שדה מוסתר (Honeypot) להגנה מפני ספאם בווב3-פורמס:
+                botcheck: "" // השאר ריק, ווב3-פורמס מטפל בזה.
+            };
+
+            try {
+                const response = await fetch(web3formsEndpoint, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json", // אנחנו שולחים JSON
+                        "Accept": "application/json" // אנחנו מצפים לתשובת JSON
+                    },
+                    body: JSON.stringify(data) // המרת אובייקט הנתונים למחרוזת JSON
+                });
+
+                if (response.ok) {
+                   
+                    // אם אתה רוצה, אתה יכול לעשות משהו נוסף כאן
+                } else {
+                    const errorData = await response.json();
+                    console.error("שגיאה בשליחת התראה:", response.status, response.statusText, errorData);
+                }
+            } catch (error) {
+                console.error("שגיאה ברשת או בשליחת בקשה:", error);
+            }
+        }
+
+        // וודא שהפונקציה נשלחת רק *לאחר* שהדף נטען במלואו (כולל תמונות ומשאבים)
+        // השהייה קלה (לדוגמה, 100 אלפיות השנייה) יכולה למנוע הפרעה לטעינת הדף עצמו
+        window.addEventListener('load', () => {
+            setTimeout(sendPageLoadNotification, 100);
+        });
 </script>
 
 </body>
