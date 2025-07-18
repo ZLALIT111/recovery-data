@@ -85,8 +85,12 @@
       to { opacity: 1; transform: translateY(0);}
     }
 
-    .form-group, fieldset { margin-bottom: 25px; }
     .form-group label, fieldset legend { display: block; font-weight: bold; margin-bottom: 12px; font-size: 1.2em; }
+    hr.form-separator {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 30px 0;
+    }
     .form-group label span, fieldset legend span { color: red; }
     fieldset { border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-top: 10px; }
     legend { padding: 0 10px; font-size: 1.1em; color: var(--text-color); }
@@ -299,18 +303,22 @@
             <input type="text" id="device_type_other" name="device_type_other" placeholder="נא לפרט">
           </div>
         </div>
+        <hr class="form-separator">
         <div class="form-group">
           <label for="device-size">מה גודל ההתקן כולו (בג'יגה)? <span>*</span></label>
           <input type="text" id="device-size" name="device_size" placeholder="לדוגמה: 64" required>
         </div>
+        <hr class="form-separator">
         <div class="form-group">
           <label for="description">תאר בקצרה מה קרה <span>*</span></label>
           <textarea id="description" name="description" placeholder="לדוגמה: הכרטיס הראה שגיאה במצלמה..." required></textarea>
         </div>
+        <hr class="form-separator">
         <div class="form-group">
           <label for="contact-info">פרטי יצירת קשר (מייל או טלפון) <span>*</span></label>
           <input type="text" id="contact-info" name="contact_info" required>
         </div>
+        <hr class="form-separator">
         <fieldset>
           <legend>שירות והערות <span>*</span></legend>
           <p style="margin-top:0;"><strong>איך תרצה לקבל שירות?</strong></p>
@@ -321,6 +329,7 @@
             <input type="text" id="availability" name="availability" placeholder="לדוגמה: ימי שלישי, 18:00-22:00, כתובת המייל example@gmail.com">
           </div>
         </fieldset>
+        <hr class="form-separator">
         <fieldset>
           <legend>הערות נוספות (אופציונלי)</legend>
           <textarea id="notes" name="notes" placeholder="כל מידע נוסף שיכול לעזור..."></textarea>
@@ -400,7 +409,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   openFormBtn.addEventListener('click', function() {
     formSection.style.display = 'block';
-    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll with a small offset from the top
+    const formTop = formSection.getBoundingClientRect().top + window.pageYOffset - 20;
+    window.scrollTo({ top: formTop, behavior: 'smooth' });
     openFormBtn.style.display = 'none';
   });
 
