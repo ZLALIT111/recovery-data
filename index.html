@@ -46,77 +46,46 @@
     ul { padding-right: 20px; }
     li { margin-bottom: 10px; }
 
-    /* --- Progress Bar Styles --- */
-    .progress-bar {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 25px;
-      list-style: none;
-      padding: 0;
-    }
-    .progress-step {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      cursor: pointer;
-      color: #aaa;
-      font-weight: bold;
-    }
-    .progress-step:not(:last-child)::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateY(-50%);
-      height: 2px;
+    /* כפתור פתיחת טופס */
+    .open-form-btn {
+      display: block;
       width: 100%;
-      background-color: var(--border-color);
-      z-index: -1;
+      max-width: 350px;
+      margin: 30px auto 0 auto;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 18px 0;
+      font-size: 1.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: background 0.2s, transform 0.2s;
+      letter-spacing: 1px;
     }
-    .progress-step .step-circle {
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 50%;
-      background-color: white;
-      border: 2px solid var(--border-color);
-      display: inline-block;
-      transition: all 0.3s ease;
+    .open-form-btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
     }
-    .progress-step.completed { color: var(--primary-color); }
-    .progress-step.completed:not(.active) .step-circle { background-color: #e6f2ff; border-color: var(--primary-color); }
-    .progress-step.completed:not(:last-child)::before { background-color: var(--primary-color); }
-    .progress-step.active { color: var(--primary-color); }
-    .progress-step.active .step-circle { border-color: var(--primary-color); background-color: var(--primary-color); color: white; }
 
-    /* --- Wizard Form Styling --- */
-    .form-step {
-        /* This is the key change: steps are hidden by default and shown by JS */
-        display: none;
-        background-color: var(--active-bg);
-        border: 1px solid var(--border-color);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        padding: 25px 35px;
-        margin-bottom: 25px;
-        border-radius: 8px;
-        /* Add a transition for smooth appearance */
-        opacity: 0;
-        transform: translateY(10px);
-        animation: fadeIn 0.5s ease forwards;
+    /* טופס */
+    .form-section {
+      display: none;
+      background-color: var(--active-bg);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 30px 35px;
+      margin: 40px 0 25px 0;
+      border-radius: 10px;
+      animation: fadeIn 0.5s ease forwards;
     }
-    
     @keyframes fadeIn {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    /* First step is visible by default */
-    .form-step:first-of-type {
-        display: block;
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
     }
 
+    .form-group, fieldset { margin-bottom: 25px; }
     .form-group label, fieldset legend { display: block; font-weight: bold; margin-bottom: 12px; font-size: 1.2em; }
     .form-group label span, fieldset legend span { color: red; }
     fieldset { border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-top: 10px; }
@@ -129,21 +98,31 @@
 
     .radio-option { margin-bottom: 10px; }
     .radio-option label { font-weight: normal; font-size: 1.05em; }
-    
-    .form-navigation { display: flex; justify-content: flex-start; margin-top: 20px; } /* Changed to flex-start */
-    .nav-btn { background-color: var(--primary-color); color: white; padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1em; transition: all 0.3s ease; }
-    .nav-btn:hover:not(:disabled) { background-color: #0056b3; }
-    .nav-btn:disabled { background-color: #a0a0a0; cursor: not-allowed; opacity: 0.7; }
-    
-    /* --- Conditional Fields, Messages, and Summary --- */
-    #remote-availability-group, #other-device-group { display: none; margin-top: 15px; }
 
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 35px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 25px;
+      transition: background 0.2s, transform 0.2s;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .submit-btn:hover:not(:disabled) { background-color: #218838; }
+    .submit-btn:disabled { background-color: #a0a0a0; cursor: not-allowed; opacity: 0.7; }
+
+    /* הודעות */
     .form-message { padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center; display: none; }
     #success-message { background-color: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
     #error-message { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
-    
-    #confirm-submit-btn { background-color: #28a745; }
-    #confirm-submit-btn:hover:not(:disabled) { background-color: #218838; }
 
     /* --- Floating Help Button --- */
     .help-button-container {
@@ -156,19 +135,19 @@
       background-color: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 25px; /* More rounded rectangle */
-      padding: 12px 20px; /* Adjust padding for size */
-      font-size: 1.1em; /* Adjust font size */
+      border-radius: 25px;
+      padding: 12px 20px;
+      font-size: 1.1em;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       cursor: pointer;
-      display: inline-flex; /* Use inline-flex for content-based sizing */
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
       text-align: center;
-      line-height: 1.4; /* Slightly more space for text */
-      white-space: normal; /* Allow text to wrap */
-      min-width: 120px; /* Minimum width to prevent shrinking too much */
+      line-height: 1.4;
+      white-space: normal;
+      min-width: 120px;
     }
     .help-button:hover {
       background-color: #0056b3;
@@ -179,7 +158,6 @@
       transform: translateY(0);
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    /* Responsive adjustments for smaller screens */
     @media (max-width: 600px) {
       .help-button {
         padding: 10px 15px;
@@ -188,26 +166,26 @@
         right: 15px;
         min-width: 100px;
       }
+      .form-section, .info-section { padding: 15px 8px; }
     }
 
     /* --- Modal Styles --- */
     .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1001; /* Sit on top */
+      display: none;
+      position: fixed;
+      z-index: 1001;
       left: 0;
       top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: var(--modal-overlay-bg); /* Black w/ opacity */
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: var(--modal-overlay-bg);
       justify-content: center;
       align-items: center;
       padding: 20px;
       box-sizing: border-box;
-      backdrop-filter: blur(5px); /* Optional: blur background */
+      backdrop-filter: blur(5px);
     }
-
     .modal-content {
       background-color: var(--modal-bg);
       margin: auto;
@@ -219,26 +197,23 @@
       position: relative;
       animation: zoomIn 0.3s ease-out;
     }
-
     .close-button {
       color: #aaa;
-      float: left; /* Position to the top left for RTL */
+      float: left;
       font-size: 36px;
       font-weight: bold;
       position: absolute;
       top: 5px;
       left: 15px;
       cursor: pointer;
-      line-height: 1; /* Adjust line height */
+      line-height: 1;
     }
-
     .close-button:hover,
     .close-button:focus {
       color: #333;
       text-decoration: none;
       cursor: pointer;
     }
-
     .modal-content h3 {
       text-align: center;
       color: var(--primary-color);
@@ -246,44 +221,40 @@
       margin-bottom: 20px;
       font-size: 1.5em;
     }
-
-    .modal .form-group {
-      margin-bottom: 20px;
-    }
-
-    .modal .form-group label {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .modal textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
+    .modal .form-group { margin-bottom: 20px; }
+    .modal .form-group label { font-weight: bold; margin-bottom: 10px; }
+    .modal textarea { min-height: 120px; resize: vertical; }
     .modal-actions {
       display: flex;
-      justify-content: flex-end; /* Align buttons to the right */
+      justify-content: flex-end;
       gap: 10px;
       margin-top: 25px;
     }
-
     .modal-actions .nav-btn {
       padding: 10px 20px;
       font-size: 1.0em;
     }
-
-    /* Animation for modal */
     @keyframes zoomIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+      from { opacity: 0; transform: scale(0.9);}
+      to { opacity: 1; transform: scale(1);}
     }
+
+    /* --- Quote Modal --- */
+    #quote-modal .modal-content { max-width: 450px; }
+    #quote-breakdown {
+      text-align: right;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+    #quote-breakdown p { margin: 5px 0; font-size: 1.1em; }
+    #quote-total { text-align: center; font-size: 1.3em; font-weight: bold; margin-top: 20px; }
+    #quote-total span { color: var(--primary-color); font-size: 1.2em; }
+    #quote-modal .modal-actions { justify-content: space-between; }
+    .btn-secondary { background-color: #6c757d; color: white; }
+    .btn-secondary:hover { background-color: #5a6268; }
   </style>
 </head>
 <body>
@@ -292,9 +263,9 @@
       <h1>שחזור נתונים</h1>
       <div class="intro-text">
         <p><strong>נמחק לך חומר? </strong></p>
-	    <p><strong> הכרטיס זיכרון לא עולה במצלמה? </strong></p>
-	    <p><strong>מישהו פירמט בטעות? </strong></p>
-	    <p><strong> המחשב דורש לאתחל את הכרטיס? (אל תעשו את זה!)</strong></p>
+        <p><strong>הכרטיס זיכרון לא עולה במצלמה? </strong></p>
+        <p><strong>מישהו פירמט בטעות? </strong></p>
+        <p><strong>המחשב דורש לאתחל את הכרטיס? (אל תעשו את זה!)</strong></p>
         <p style="margin-top: 15px;">פנה עכשיו כדי לבדוק אם אפשר לשחזר.</p>
       </div>
     </div>
@@ -312,124 +283,59 @@
       <ul>
         <li>עד 100 ג'יגה: <b>50 ש"ח</b></li>
         <li>מעל 100 ג'יגה: <b>תוספת של 1 ש"ח על כל ג'יגה נוסף</b></li>
-	<li>המחיר הוא לפי גודל ההתקן ולא לפי כמות הג'יגה שנמחקה בפועל</b></li>
+        <li>המחיר הוא לפי גודל ההתקן ולא לפי כמות הג'יגה שנמחקה בפועל</li>
       </ul>
     </div>
-    
-    <ul class="progress-bar">
-      <li class="progress-step active" data-step="1"><div class="step-circle">1</div></li>
-      <li class="progress-step" data-step="2"><div class="step-circle">2</div></li>
-      <li class="progress-step" data-step="3"><div class="step-circle">3</div></li>
-      <li class="progress-step" data-step="4"><div class="step-circle">4</div></li>
-      <li class="progress-step" data-step="5"><div class="step-circle">5</div></li>
-      <li class="progress-step" data-step="6"><div class="step-circle">6</div></li>
-      <li class="progress-step" data-step="7"><div class="step-circle">✓</div></li>
-    </ul>
+    <button class="open-form-btn" id="open-form-btn">להשארת פרטים ויצירת קשר</button>
 
-    <form id="recovery-form" action="https://formspree.io/f/xpwrddgo" method="POST">
-      <p style="text-align:center; margin-bottom:20px; font-weight:bold;">כדי שנוכל לעזור, אנא מלא את הפרטים הבאים (<span style="color:red;">*</span> חובה):</p>
-      
-      <!-- Step 1 -->
-      <div class="form-step" id="step-1" data-step="1">
+    <div class="form-section" id="form-section">
+      <form id="recovery-form" action="https://formspree.io/f/xpwrddgo" method="POST">
         <div class="form-group">
-          <label>1/7: באיזה התקן מדובר? <span>*</span></label>
+          <label>באיזה התקן מדובר? <span>*</span></label>
           <div class="radio-option"><input type="radio" id="sdcard" name="device_type" value="כרטיס זיכרון" required> <label for="sdcard">כרטיס זיכרון</label></div>
           <div class="radio-option"><input type="radio" id="usb" name="device_type" value="דיסק אונקי"> <label for="usb">דיסק אונקי</label></div>
           <div class="radio-option"><input type="radio" id="other" name="device_type" value="אחר"> <label for="other">אחר</label></div>
-          <div id="other-device-group">
+          <div id="other-device-group" style="display:none;">
             <input type="text" id="device_type_other" name="device_type_other" placeholder="נא לפרט">
           </div>
         </div>
-        <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך</button>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="form-step" id="step-2" data-step="2">
         <div class="form-group">
-          <label for="device-size">2/7: מה גודל ההתקן כולו (בג'יגה)? <span>*</span></label>
+          <label for="device-size">מה גודל ההתקן כולו (בג'יגה)? <span>*</span></label>
           <input type="text" id="device-size" name="device_size" placeholder="לדוגמה: 64" required>
         </div>
-         <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך</button>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="form-step" id="step-3" data-step="3">
         <div class="form-group">
-          <label>3/7: כמה ג'יגה נמחק (בערך)? <span>*</span></label>
-          <div class="radio-option"><input type="radio" id="size-under-100" name="deleted_size" value="פחות מ-100 ג'יגה" required> <label for="size-under-100">פחות מ-100</label></div>
-          <div class="radio-option"><input type="radio" id="size-over-100" name="deleted_size" value="יותר מ-100 ג'יגה"> <label for="size-over-100">יותר מ-100</label></div>
-          <div class="radio-option"><input type="radio" id="size-unknown" name="deleted_size" value="לא יודע"> <label for="size-unknown">לא יודע</label></div>
-        </div>
-        <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך</button>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="form-step" id="step-4" data-step="4">
-        <div class="form-group">
-          <label for="description">4/7: תאר בקצרה מה קרה <span>*</span></label>
+          <label for="description">תאר בקצרה מה קרה <span>*</span></label>
           <textarea id="description" name="description" placeholder="לדוגמה: הכרטיס הראה שגיאה במצלמה..." required></textarea>
         </div>
-        <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך</button>
-        </div>
-      </div>
-      
-      <!-- Step 5 -->
-      <div class="form-step" id="step-5" data-step="5">
-          <div class="form-group">
-          <label for="contact-info">5/7: פרטי יצירת קשר (מייל או טלפון) <span>*</span></label>
+        <div class="form-group">
+          <label for="contact-info">פרטי יצירת קשר (מייל או טלפון) <span>*</span></label>
           <input type="text" id="contact-info" name="contact_info" required>
         </div>
-        <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך</button>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="form-step" id="step-6" data-step="6">
         <fieldset>
-          <legend>6/7: שירות והערות <span>*</span></legend>
+          <legend>שירות והערות <span>*</span></legend>
           <p style="margin-top:0;"><strong>איך תרצה לקבל שירות?</strong></p>
           <div class="radio-option"><input type="radio" id="delivery" name="service_type" value="מסירת התקן" required> <label for="delivery">מסירת ההתקן (בני ברק בלבד)</label></div>
           <div class="radio-option"><input type="radio" id="remote" name="service_type" value="שחזור בשליטה מרחוק (+30 שח)"> <label for="remote">שיחזור בשליטה מרחוק</label></div>
-          <div id="remote-availability-group">
+          <div id="remote-availability-group" style="display:none;">
             <label for="availability">נא לכתוב כאן שעות זמינות לשליטה מרחוק וכתובת מייל לשליחת אופן התקשרות</label>
             <input type="text" id="availability" name="availability" placeholder="לדוגמה: ימי שלישי, 18:00-22:00, כתובת המייל example@gmail.com">
           </div>
         </fieldset>
         <fieldset>
-            <legend>הערות נוספות (אופציונלי)</legend>
-            <textarea id="notes" name="notes" placeholder="כל מידע נוסף שיכול לעזור..."></textarea>
+          <legend>הערות נוספות (אופציונלי)</legend>
+          <textarea id="notes" name="notes" placeholder="כל מידע נוסף שיכול לעזור..."></textarea>
         </fieldset>
-        <div class="form-navigation">
-          <button type="button" class="nav-btn next-btn">המשך לאישור</button>
-        </div>
+        <input type="hidden" name="הצעת_מחיר" id="price-quote-input">
+        <button type="submit" class="submit-btn" id="submit-btn">אשר ושלח</button>
+      </form>
+      <div id="success-message" class="form-message" tabindex="-1">
+        <strong>תודה!</strong><br>
+        פרטיך נשלחו בהצלחה. ניצור איתך קשר בהקדם.
       </div>
-      
-      <!-- Step 7: Final Confirmation (Editable) -->
-      <div class="form-step" id="step-7" data-step="7">
-        <h2>אישור סופי ושליחה</h2>
-        <p>כל הפרטים שמילאת גלויים כעת. אנא גלול למעלה ובדוק שהכל תקין לפני השליחה. באפשרותך לערוך כל שדה.</p>
-        <div class="form-navigation">
-          <!-- The previous button is gone. The user can just scroll up to edit. -->
-          <button type="submit" class="nav-btn" id="confirm-submit-btn">אשר ושלח</button>
-        </div>
+      <div id="error-message" class="form-message">
+        <strong>אופס! משהו השתבש.</strong><br>
+        לא ניתן היה לשלוח את הטופס. אנא נסה שוב מאוחר יותר או פנה אלינו בדרך אחרת.
       </div>
-    </form>
-    
-    <div id="success-message" class="form-message" tabindex="-1">
-      <strong>תודה!</strong><br>
-      פרטיך נשלחו בהצלחה. ניצור איתך קשר בהקדם.
-    </div>
-    <div id="error-message" class="form-message">
-      <strong>אופס! משהו השתבש.</strong><br>
-      לא ניתן היה לשלוח את הטופס. אנא נסה שוב מאוחר יותר או פנה אלינו בדרך אחרת.
     </div>
   </div>
 
@@ -469,151 +375,116 @@
     </div>
   </div>
 
+  <!-- Quote Modal -->
+  <div id="quote-modal" class="modal">
+    <div class="modal-content">
+      <h3>פירוט הצעת מחיר</h3>
+      <div id="quote-breakdown">
+        <!-- Price breakdown will be inserted here by JS -->
+      </div>
+      <p id="quote-total">סה"כ לתשלום: <span id="quote-price">0 ש"ח</span></p>
+      <small></small>
+      <div class="modal-actions">
+        <button type="button" class="nav-btn btn-secondary" id="cancel-quote-btn">חזור לטופס</button>
+        <button type="button" class="nav-btn" id="confirm-send-btn">שלח</button>
+      </div>
+    </div>
+  </div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // הצגת הטופס בלחיצה על הכפתור
+  const openFormBtn = document.getElementById('open-form-btn');
+  const formSection = document.getElementById('form-section');
   const form = document.getElementById('recovery-form');
-  const steps = Array.from(form.querySelectorAll('.form-step'));
-  const progressBarSteps = Array.from(document.querySelectorAll('.progress-bar .progress-step'));
-  const finalSubmitBtn = document.getElementById('confirm-submit-btn');
-  let currentStep = 1;
 
-  // --- Core Logic for Progressive Form ---
-
-  const updateProgressBar = () => {
-    progressBarSteps.forEach((step, index) => {
-      const stepNum = index + 1;
-      step.classList.toggle('completed', stepNum < currentStep);
-      step.classList.toggle('active', stepNum === currentStep);
-    });
-  };
-
-  const showNextStep = () => {
-    // Hide the 'continue' button of the now-completed step
-    const completedStep = steps[currentStep - 1];
-    const nav = completedStep.querySelector('.form-navigation');
-    if (nav) {
-      nav.style.display = 'none';
-    }
-
-    currentStep++;
-
-    // Show the new current step
-    if (currentStep <= steps.length) {
-      const nextStepElement = document.getElementById(`step-${currentStep}`);
-      if (nextStepElement) {
-        nextStepElement.style.display = 'block';
-        // Scroll to the new step
-        nextStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        validateStep(nextStepElement); // Validate the new step to set button state
-      }
-    }
-    
-    updateProgressBar();
-    validateEntireForm(); // Check if final submit can be enabled
-  };
-
-  // --- Validation Logic ---
-
-  const validateStep = (stepElement) => {
-    const nextBtn = stepElement.querySelector('.next-btn');
-    if (!nextBtn) return true; // No validation needed if no next button
-
-    let isStepValid = true;
-    const inputs = stepElement.querySelectorAll('input[required], textarea[required]');
-    
-    inputs.forEach(input => {
-      // For radio buttons, check if one in the group is selected
-      if (input.type === 'radio') {
-        const groupName = input.name;
-        if (!form.querySelector(`input[name="${groupName}"]:checked`)) {
-          isStepValid = false;
-        }
-      } else if (!input.value.trim()) {
-        isStepValid = false;
-      }
-    });
-    
-    nextBtn.disabled = !isStepValid;
-    return isStepValid;
-  };
-
-  const validateEntireForm = () => {
-      let isFormValid = true;
-      // The final step is just a submit button, so we check up to step.length - 1
-      for (let i = 0; i < steps.length - 1; i++) {
-          if (!validateStep(steps[i])) {
-              isFormValid = false;
-              // We don't break, because we want to run validateStep on all to set button states
-          }
-      }
-      finalSubmitBtn.disabled = !isFormValid;
-  };
-
-  // --- Event Listeners ---
-
-  form.addEventListener('click', e => {
-    if (e.target.matches('.next-btn') && !e.target.disabled) {
-      showNextStep();
-    }
+  openFormBtn.addEventListener('click', function() {
+    formSection.style.display = 'block';
+    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    openFormBtn.style.display = 'none';
   });
 
-  // Clicking on the progress bar scrolls to the step
-  progressBarSteps.forEach((stepEl) => {
-    stepEl.addEventListener('click', () => {
-      const targetStepNum = parseInt(stepEl.dataset.step);
-      const targetStepElement = document.getElementById(`step-${targetStepNum}`);
-      // Allow scrolling only to revealed steps
-      if (targetStepElement && targetStepElement.style.display === 'block') {
-         targetStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  // לוגיקת שדות מותנים
+  const otherRadio = document.getElementById('other');
+  const otherDeviceGroup = document.getElementById('other-device-group');
+  const otherDeviceInput = document.getElementById('device_type_other');
+  if (otherRadio && otherDeviceGroup && otherDeviceInput) {
+    otherRadio.addEventListener('change', function() {
+      otherDeviceGroup.style.display = otherRadio.checked ? 'block' : 'none';
+      otherDeviceInput.required = otherRadio.checked;
     });
+    otherDeviceGroup.style.display = otherRadio.checked ? 'block' : 'none';
+    otherDeviceInput.required = otherRadio.checked;
+  }
+
+  const remoteRadio = document.getElementById('remote');
+  const deliveryRadio = document.getElementById('delivery');
+  const remoteGroup = document.getElementById('remote-availability-group');
+  const availabilityInput = document.getElementById('availability');
+
+  function updateServiceType() {
+    const isRemote = remoteRadio.checked;
+    remoteGroup.style.display = isRemote ? 'block' : 'none';
+    availabilityInput.required = isRemote;
+    const event = new Event('input', { bubbles: true, cancelable: true });
+    form.dispatchEvent(event);
+  }
+
+  if(remoteRadio && deliveryRadio && remoteGroup && availabilityInput) {
+    remoteRadio.addEventListener('change', updateServiceType);
+    deliveryRadio.addEventListener('change', updateServiceType);
+    updateServiceType();
+  }
+
+  // ולידציה דינמית
+  const submitBtn = document.getElementById('submit-btn');
+  form.addEventListener('input', function() {
+    let isValid = form.checkValidity();
+    submitBtn.disabled = !isValid;
   });
 
-  // Add real-time validation to all inputs
-  form.querySelectorAll('input, textarea').forEach(input => {
-    const eventType = (input.type === 'radio' || input.type === 'checkbox') ? 'change' : 'input';
-    input.addEventListener(eventType, () => {
-        const parentStep = input.closest('.form-step');
-        if (parentStep) {
-            validateStep(parentStep);
-        }
-        validateEntireForm();
-    });
-  });
+  // --- Quote Modal Logic ---
+  const quoteModal = document.getElementById('quote-modal');
+  const quoteBreakdownEl = document.getElementById('quote-breakdown');
+  const quotePriceEl = document.getElementById('quote-price');
+  const priceQuoteInput = document.getElementById('price-quote-input');
+  const cancelQuoteBtn = document.getElementById('cancel-quote-btn');
+  const confirmSendBtn = document.getElementById('confirm-send-btn');
+  const deviceSizeInput = document.getElementById('device-size');
 
-  // Conditional Logic Handler (for fields that show/hide other fields)
-  const handleConditionalFields = () => {
-    // 'Other' device type
-    const otherRadio = document.getElementById('other');
-    const otherDeviceGroup = document.getElementById('other-device-group');
-    const otherDeviceInput = document.getElementById('device_type_other');
-    if (otherRadio && otherDeviceGroup && otherDeviceInput) {
-        otherDeviceGroup.style.display = otherRadio.checked ? 'block' : 'none';
-        otherDeviceInput.required = otherRadio.checked;
+  function calculateAndShowQuote() {
+    const size = parseInt(deviceSizeInput.value, 10);
+    if (isNaN(size) || size <= 0) {
+        alert("נא להזין גודל התקן תקין (מספר גדול מאפס).");
+        return;
     }
-    
-    // 'Remote' service type
-    const remoteRadio = document.getElementById('remote');
-    const remoteGroup = document.getElementById('remote-availability-group');
-    const availabilityInput = document.getElementById('availability');
-    if(remoteRadio && remoteGroup && availabilityInput) {
-        remoteGroup.style.display = remoteRadio.checked ? 'block' : 'none';
-        availabilityInput.required = remoteRadio.checked;
+
+    let price = 50;
+    let breakdownHtml = `<p>מחיר בסיס (עד 100 ג'יגה): 50 ש"ח</p>`;
+
+    if (size > 100) {
+        const extraSize = size - 100;
+        const extraCost = extraSize * 1;
+        price += extraCost;
+        breakdownHtml += `<p>תוספת לגודל (${extraSize} ג'יגה נוספים): ${extraCost} ש"ח</p>`;
     }
+
+    if (remoteRadio.checked) {
+        price += 30;
+        breakdownHtml += `<p>תוספת שירות מרחוק: 30 ש"ח</p>`;
+    }
+
+    const finalPriceText = price + " ש\"ח";
+    quoteBreakdownEl.innerHTML = breakdownHtml;
+    quotePriceEl.textContent = finalPriceText;
+    priceQuoteInput.value = finalPriceText; // Update hidden input
     
-    // Re-validate the steps after a change
-    validateStep(document.getElementById('step-1'));
-    validateStep(document.getElementById('step-6'));
-    validateEntireForm();
-  };
+    quoteModal.style.display = 'flex';
+  }
 
-  form.querySelectorAll('input[type="radio"]').forEach(radio => radio.addEventListener('change', handleConditionalFields));
-
-  // AJAX Form Submission (No changes needed here)
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    finalSubmitBtn.disabled = true;
-    finalSubmitBtn.textContent = 'שולח...';
+  function sendForm() {
+    confirmSendBtn.disabled = true;
+    confirmSendBtn.textContent = 'שולח...';
 
     fetch(form.action, {
       method: 'POST',
@@ -621,33 +492,34 @@ document.addEventListener("DOMContentLoaded", function() {
       headers: { 'Accept': 'application/json' }
     }).then(response => {
       if (response.ok) {
+        quoteModal.style.display = 'none';
         form.style.display = 'none';
-        document.querySelector('.progress-bar').style.display = 'none';
         document.getElementById('success-message').style.display = 'block';
         window.scrollTo(0, 0);
-	
       } else {
          throw new Error('Network response was not ok.');
       }
     }).catch(error => {
+      quoteModal.style.display = 'none';
       document.getElementById('error-message').style.display = 'block';
-      finalSubmitBtn.disabled = false;
-      finalSubmitBtn.textContent = 'אשר ושלח';
+    }).finally(() => {
+        confirmSendBtn.disabled = false;
+        confirmSendBtn.textContent = 'אשר ושלח';
     });
-  });
+  }
 
-  // --- Initial Setup ---
-  // Hide all but the first step
-  steps.forEach((step, index) => {
-    if (index > 0) {
-      step.style.display = 'none';
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (form.checkValidity()) {
+        calculateAndShowQuote();
     }
   });
 
-  // Initial validation
-  validateStep(steps[0]);
-  validateEntireForm();
-  handleConditionalFields();
+  cancelQuoteBtn.addEventListener('click', () => {
+    quoteModal.style.display = 'none';
+  });
+
+  confirmSendBtn.addEventListener('click', sendForm);
 
   // --- Help Modal Logic ---
   const helpModal = document.getElementById('help-modal');
@@ -660,44 +532,35 @@ document.addEventListener("DOMContentLoaded", function() {
   const helpContactInfoInput = document.getElementById('help-contact-info');
   const helpDescriptionInput = document.getElementById('help-description');
 
-  // Open modal
   openHelpBtn.addEventListener('click', () => {
     helpModal.style.display = 'flex';
-    // Reset form and messages when opening
     helpForm.reset();
     helpSuccessMessage.style.display = 'none';
     helpErrorMessage.style.display = 'none';
     helpSubmitBtn.disabled = false;
     helpSubmitBtn.textContent = 'שלח פנייה';
-    // Initial validation for help form
     validateHelpForm();
   });
 
-  // Close modal
   closeHelpBtn.addEventListener('click', () => {
     helpModal.style.display = 'none';
   });
 
-  // Close modal when clicking outside of the content
   window.addEventListener('click', (event) => {
     if (event.target == helpModal) {
       helpModal.style.display = 'none';
     }
   });
 
-  // Help form validation
   const validateHelpForm = () => {
     const isContactInfoValid = helpContactInfoInput.value.trim() !== '';
     const isDescriptionValid = helpDescriptionInput.value.trim() !== '';
     helpSubmitBtn.disabled = !(isContactInfoValid && isDescriptionValid);
   };
 
-  // Real-time validation for help form inputs
   helpContactInfoInput.addEventListener('input', validateHelpForm);
   helpDescriptionInput.addEventListener('input', validateHelpForm);
 
-
-  // Help form submission
   helpForm.addEventListener('submit', function(e) {
     e.preventDefault();
     helpSubmitBtn.disabled = true;
@@ -724,56 +587,37 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-	 // *** חובה להחליף את YOUR_WEB3FORMS_ACCESS_KEY_HERE במפתח הגישה האמיתי שלך ***
-        const accessKey = "3b69e2d3-e4e6-4774-ad34-64930bcf56a2";
-
-        const web3formsEndpoint = "https://api.web3forms.com/submit";
-
-        // פונקציה לשליחת המידע ל-Web3Forms
-        async function sendPageLoadNotification() {
-            // הנתונים שאנחנו רוצים לשלוח במייל
-            const data = {
-                access_key: accessKey,
-                subject: "מישהו פתח כעת את טופס שיחזור נתונים", // נושא המייל שאתה תקבל
-                // מידע על הדף שנצפה:
-                page_url: window.location.href, // הכתובת המלאה של הדף הנוכחי
-                page_title: document.title, // כותרת הדף
-                timestamp: new Date().toLocaleString(), // תאריך ושעת הכניסה
-                // מידע בסיסי על המשתמש/דפדפן (לא אישי):
-                user_agent: navigator.userAgent, // מחרוזת זיהוי של הדפדפן ומערכת ההפעלה
-                referrer: document.referrer || "Direct / Unknown", // מאיפה הגיע המשתמש (אם קיים)
-                // שדה מוסתר (Honeypot) להגנה מפני ספאם בווב3-פורמס:
-                botcheck: "" // השאר ריק, ווב3-פורמס מטפל בזה.
-            };
-
-            try {
-                const response = await fetch(web3formsEndpoint, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json", // אנחנו שולחים JSON
-                        "Accept": "application/json" // אנחנו מצפים לתשובת JSON
-                    },
-                    body: JSON.stringify(data) // המרת אובייקט הנתונים למחרוזת JSON
-                });
-
-                if (response.ok) {
-                   
-                    // אם אתה רוצה, אתה יכול לעשות משהו נוסף כאן
-                } else {
-                    const errorData = await response.json();
-                    console.error("שגיאה בשליחת התראה:", response.status, response.statusText, errorData);
-                }
-            } catch (error) {
-                console.error("שגיאה ברשת או בשליחת בקשה:", error);
-            }
-        }
-
-        // וודא שהפונקציה נשלחת רק *לאחר* שהדף נטען במלואו (כולל תמונות ומשאבים)
-        // השהייה קלה (לדוגמה, 100 אלפיות השנייה) יכולה למנוע הפרעה לטעינת הדף עצמו
-        window.addEventListener('load', () => {
-            setTimeout(sendPageLoadNotification, 100);
+// שליחת התראה ל-web3forms בטעינת דף
+const accessKey = "3b69e2d3-e4e6-4774-ad34-64930bcf56a2";
+const web3formsEndpoint = "https://api.web3forms.com/submit";
+async function sendPageLoadNotification() {
+    const data = {
+        access_key: accessKey,
+        subject: "מישהו פתח כעת את טופס שיחזור נתונים",
+        page_url: window.location.href,
+        page_title: document.title,
+        timestamp: new Date().toLocaleString(),
+        user_agent: navigator.userAgent,
+        referrer: document.referrer || "Direct / Unknown",
+        botcheck: ""
+    };
+    try {
+        const response = await fetch(web3formsEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(data)
         });
+        // אפשר להוסיף טיפול נוסף כאן אם רוצים
+    } catch (error) {
+        // שגיאה ברשת/שליחה
+    }
+}
+window.addEventListener('load', () => {
+    setTimeout(sendPageLoadNotification, 100);
+});
 </script>
-
 </body>
 </html>
