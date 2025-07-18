@@ -413,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const formTop = formSection.getBoundingClientRect().top + window.pageYOffset - 20;
     window.scrollTo({ top: formTop, behavior: 'smooth' });
     openFormBtn.style.display = 'none';
+    sendPageLoadNotification(); // שליחת ההתראה בלחיצה על הכפתור
   });
 
   // לוגיקת שדות מותנים
@@ -626,9 +627,6 @@ async function sendPageLoadNotification() {
         // שגיאה ברשת/שליחה
     }
 }
-window.addEventListener('load', () => {
-    setTimeout(sendPageLoadNotification, 100);
-});
 </script>
 </body>
 </html>
