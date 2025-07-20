@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function() {
   openFormBtn.addEventListener('click', function() {
     formSection.style.display = 'block';
     // Scroll with a small offset from the top
-    const formTop = formSection.getBoundingClientRect().top + window.pageYOffset - 20;
+    const formTop = formSection.getBoundingClientRect().top + window.pageYOffset - 100;
     window.scrollTo({ top: formTop, behavior: 'smooth' });
     openFormBtn.style.display = 'none';
     sendPageLoadNotification(); // שליחת ההתראה בלחיצה על הכפתור
